@@ -1,0 +1,37 @@
+resource "aws_instance" "terraform" {
+      ami = "ami-09c813fb71547fc4f" 
+      vpc_security_group_ids = [aws_security_group.allow_all_Ports.id]
+      instance_type = "t3.micro"
+      tags = {
+        Name = "terraform"
+      }
+    }
+
+    resource "aws_security_group" "allow_all_Ports" {
+  name   = "allow-all-ports"
+
+  egress {
+    from_port        = 0 # from port 0 to to port 0 means all ports
+    to_port          = 0 
+    protocol         = "-1" # -1 means all protocols
+    cidr_blocks      = ["0.0.0.0/0"] # internet
+  }
+
+  ingress {
+    from_port        = 0 # from port 0 to to port 0 means all ports
+    to_port          = 0 
+    protocol         = "-1" # -1 means all protocols
+    cidr_blocks      = ["0.0.0.0/0"] # internet
+  }
+
+  tags = {
+    Name = "allow-all-ports"
+  }
+
+}
+
+
+# resource "aws_s3_bucket" "s3_bucket" { # creating S3 bucket with terraform
+#   bucket = "myown_remote_states"
+# }
+    
